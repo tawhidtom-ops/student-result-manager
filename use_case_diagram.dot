@@ -1,0 +1,20 @@
+digraph UseCases {
+  graph [rankdir=LR, fontname="Helvetica", pad=0.3, nodesep=0.35, ranksep=1.2, label="Student Result Manager - Use Case Diagram", labelloc=t, fontsize=18];
+  node  [fontname="Helvetica", fontsize=11];
+  edge  [arrowhead=none];
+  Teacher [shape=box, style=filled, fillcolor="#FFF4D6", label="Teacher\n(actor)"];
+  subgraph cluster_sys {
+    label="Student Result Manager"; style=rounded; color="#888888";
+    node [shape=ellipse, style=filled, fillcolor="#EAF2FF"];
+    UC1 [label="Add a student\n(unique ID)"];
+    UC2 [label="Add a course"];
+    UC3 [label="Enter marks\n(0-100 only)"];
+    UC4 [label="Calculate letter grade\nand grade point"];
+    UC5 [label="Calculate CGPA\n(credit-weighted)"];
+    UC6 [label="Show result sheet"];
+  }
+  Teacher -> UC1; Teacher -> UC2; Teacher -> UC3; Teacher -> UC5; Teacher -> UC6;
+  UC3 -> UC4 [style=dashed, arrowhead=vee, label="<<include>>"];
+  UC5 -> UC4 [style=dashed, arrowhead=vee, label="<<include>>"];
+  UC6 -> UC5 [style=dashed, arrowhead=vee, label="<<include>>"];
+}

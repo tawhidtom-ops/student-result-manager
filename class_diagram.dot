@@ -1,0 +1,28 @@
+digraph ClassDiagram {
+  graph [rankdir=TB, fontname="Helvetica", nodesep=0.5, ranksep=0.7, pad=0.3, label="Student Result Manager - Class Diagram", labelloc=t, fontsize=18];
+  node  [shape=record, fontname="Helvetica", fontsize=11, style=filled, fillcolor="#FFFFFF"];
+  edge  [fontname="Helvetica", fontsize=10];
+
+  CLI [label="{cli (module)||+ run(manager, input_fn, output_fn) : None\l}"];
+
+  ResultManager [fillcolor="#EAF2FF", label="{ResultManager|- _students : Dict[str, Student]\l- _courses : Dict[str, Course]\l- _results : Dict[str, Dict[str, Result]]\l|+ add_student(student_id, name) : Student\l+ add_course(code, title, credits) : Course\l+ enter_marks(student_id, course_code, mark) : Result\l+ calculate_grade(mark) : (str, Decimal)\l+ calculate_cgpa(student_id) : Decimal\l+ get_result_sheet(student_id) : ResultSheet\l+ show_result_sheet(student_id) : str\l+ list_students() : List[Student]\l+ list_courses() : List[Course]\l}"];
+
+  Grading [label="{grading (module)|GRADE_SCALE : tuple\lMIN_MARK = 0\lMAX_MARK = 100\l|+ validate_mark(mark) : Decimal\l+ get_grade(mark) : (str, Decimal)\l}"];
+
+  Student [label="{Student|+ student_id : str\l+ name : str\l}"];
+  Course  [label="{Course|+ code : str\l+ title : str\l+ credits : Decimal\l}"];
+  Result  [label="{Result|+ course_code : str\l+ mark : Decimal\l+ grade : str\l+ grade_point : Decimal\l}"];
+  ResultRow   [label="{ResultRow|+ course : Course\l+ result : Result\l}"];
+  ResultSheet [label="{ResultSheet|+ student : Student\l+ rows : List[ResultRow]\l+ total_credits : Decimal\l+ cgpa : Decimal\l|+ render() : str\l}"];
+
+  CLI -> ResultManager [style=dashed, arrowhead=vee, label="uses"];
+  ResultManager -> Grading [style=dashed, arrowhead=vee, label="uses"];
+  ResultManager -> Student [arrowtail=diamond, dir=back, headlabel="  0..*", taillabel="1", labeldistance=2];
+  ResultManager -> Course  [arrowtail=diamond, dir=back, headlabel="  0..*", taillabel="1", labeldistance=2];
+  ResultManager -> Result  [arrowtail=diamond, dir=back, headlabel="  0..*", taillabel="1", labeldistance=2];
+  ResultManager -> ResultSheet [style=dashed, arrowhead=vee, label="creates"];
+  ResultSheet -> ResultRow [arrowtail=diamond, dir=back, headlabel="  0..*", taillabel="1", labeldistance=2];
+  ResultSheet -> Student [arrowhead=vee, label="of"];
+  ResultRow -> Course [arrowhead=vee];
+  ResultRow -> Result [arrowhead=vee];
+}

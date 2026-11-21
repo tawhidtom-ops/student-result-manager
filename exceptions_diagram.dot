@@ -1,0 +1,15 @@
+digraph Exceptions {
+  graph [rankdir=BT, fontname="Helvetica", nodesep=0.35, ranksep=0.6, pad=0.3, label="Student Result Manager - Exception Hierarchy", labelloc=t, fontsize=18];
+  node  [shape=box, fontname="Helvetica", fontsize=11, style=filled, fillcolor="#FFFFFF"];
+  edge  [arrowhead=onormal];
+  Exception [fillcolor="#EEEEEE"];
+  ResultManagerError [fillcolor="#EAF2FF"];
+  InvalidInputError; InvalidMarkError; DuplicateStudentError; DuplicateCourseError; StudentNotFoundError; CourseNotFoundError;
+  ResultManagerError -> Exception;
+  InvalidInputError -> ResultManagerError;
+  InvalidMarkError -> ResultManagerError;
+  DuplicateStudentError -> ResultManagerError;
+  DuplicateCourseError -> ResultManagerError;
+  StudentNotFoundError -> ResultManagerError;
+  CourseNotFoundError -> ResultManagerError;
+}
